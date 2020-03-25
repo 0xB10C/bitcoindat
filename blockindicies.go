@@ -6,7 +6,6 @@ import (
 	"sort"
 
 	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/syndtr/goleveldb/leveldb/opt"
 	"github.com/syndtr/goleveldb/leveldb/util"
 )
 
@@ -64,7 +63,7 @@ type BlockIndex struct {
 // GetBlockIndices reads all indexed blocks from the leveldb database and
 // returns these unordered.
 func (p *BitcoinDAT) GetBlockIndices() (BlockIndices, error) {
-	db, err := leveldb.OpenFile(p.datPath+"/index/", &opt.Options{ReadOnly: true})
+	db, err := p.openDB(p.datPath + "/blocks/index")
 	if err != nil {
 		return nil, err
 	}
