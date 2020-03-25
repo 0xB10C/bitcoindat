@@ -65,10 +65,10 @@ type BlockIndex struct {
 // returns these unordered.
 func (p *BitcoinDAT) GetBlockIndices() (BlockIndices, error) {
 	db, err := leveldb.OpenFile(p.datPath+"/index/", &opt.Options{ReadOnly: true})
-	defer db.Close()
 	if err != nil {
 		return nil, err
 	}
+	defer db.Close()
 
 	bi, err := buildBlockIndex(db)
 	if err != nil {
