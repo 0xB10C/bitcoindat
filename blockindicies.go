@@ -10,41 +10,32 @@ import (
 	"github.com/syndtr/goleveldb/leveldb/util"
 )
 
-// BlockValidHeader - Parsed, version ok, hash satisfies claimed PoW, 1 <= vtx count <= max, timestamp not in future
-const BlockValidHeader = 1
-
-// BlockValidTree - All parent headers found, difficulty matches, timestamp >= median previous, checkpoint. Implies all parents are also at least TREE.
-const BlockValidTree = 2
-
-// BlockValidTransactions - Only first tx is coinbase, 2 <= coinbase input script length <= 100, transactions valid, no duplicate txids, sigops, size, merkle root. Implies all parents are at least TREE but not necessarily TRANSACTIONS. When all parent blocks also have TRANSACTIONS.
-const BlockValidTransactions = 3
-
-// BlockValidChain - Outputs do not overspend inputs, no double spends, coinbase output ok, immature coinbase spends, BIP30. Implies all parents are also at least CHAIN.
-const BlockValidChain = 4
-
-// BlockValidScripts - Scripts & signatures ok. Implies all parents are also at least SCRIPTS.
-const BlockValidScripts = 5
-
-// BlockValidMask - All validity bits.
-const BlockValidMask = BlockValidHeader | BlockValidTree | BlockValidTransactions | BlockValidChain | BlockValidScripts
-
-// BlockHaveData - full block available in blk*.dat
-const BlockHaveData = 8
-
-// BlockHaveUndo - undo data available in rev*.dat
-const BlockHaveUndo = 16
-
-// BlockHaveMask - Block and Undo data avaliable
-const BlockHaveMask = BlockHaveData | BlockHaveUndo
-
-// BlockFailedValid - stage after last reached validness failed
-const BlockFailedValid = 32
-
-// BlockFailedChild - descends from failed block
-const BlockFailedChild = 64
-
-// BlockFailedMask - Mask for failed block.
-const BlockFailedMask = BlockFailedValid | BlockFailedChild
+const (
+	// BlockValidHeader - Parsed, version ok, hash satisfies claimed PoW, 1 <= vtx count <= max, timestamp not in future
+	BlockValidHeader = 1
+	// BlockValidTree - All parent headers found, difficulty matches, timestamp >= median previous, checkpoint. Implies all parents are also at least TREE.
+	BlockValidTree = 2
+	// BlockValidTransactions - Only first tx is coinbase, 2 <= coinbase input script length <= 100, transactions valid, no duplicate txids, sigops, size, merkle root. Implies all parents are at least TREE but not necessarily TRANSACTIONS. When all parent blocks also have TRANSACTIONS.
+	BlockValidTransactions = 3
+	// BlockValidChain - Outputs do not overspend inputs, no double spends, coinbase output ok, immature coinbase spends, BIP30. Implies all parents are also at least CHAIN.
+	BlockValidChain = 4
+	// BlockValidScripts - Scripts & signatures ok. Implies all parents are also at least SCRIPTS.
+	BlockValidScripts = 5
+	// BlockValidMask - All validity bits.
+	BlockValidMask = BlockValidHeader | BlockValidTree | BlockValidTransactions | BlockValidChain | BlockValidScripts
+	// BlockHaveData - full block available in blk*.dat
+	BlockHaveData = 8
+	// BlockHaveUndo - undo data available in rev*.dat
+	BlockHaveUndo = 16
+	// BlockHaveMask - Block and Undo data avaliable
+	BlockHaveMask = BlockHaveData | BlockHaveUndo
+	// BlockFailedValid - stage after last reached validness failed
+	BlockFailedValid = 32
+	// BlockFailedChild - descends from failed block
+	BlockFailedChild = 64
+	// BlockFailedMask - Mask for failed block.
+	BlockFailedMask = BlockFailedValid | BlockFailedChild
+)
 
 // BlockIndices is a list of multiple BlockIndex which can contain multiple blocks at the same hight and forks
 type BlockIndices []BlockIndex
