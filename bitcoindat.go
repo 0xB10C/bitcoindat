@@ -15,8 +15,8 @@ type BitcoinDAT struct {
 }
 
 // NewBitcoinDAT is the factory function to instantiate a new BitcoinDAT
-func NewBitcoinDAT(datPath string) (*BitcoinDAT, error) {
-	return &BitcoinDAT{datPath: datPath}, nil
+func NewBitcoinDAT(datPath string) *BitcoinDAT {
+	return &BitcoinDAT{datPath: datPath}
 }
 
 func (d *BitcoinDAT) openDB(path string) (*leveldb.DB, error) {
