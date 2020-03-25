@@ -1,4 +1,4 @@
-package datparser
+package bitcoindat
 
 import (
 	"bytes"
@@ -63,7 +63,7 @@ type BlockIndex struct {
 
 // GetBlockIndices reads all indexed blocks from the leveldb database and
 // returns these unordered.
-func (p *DATParser) GetBlockIndices() (BlockIndices, error) {
+func (p *BitcoinDAT) GetBlockIndices() (BlockIndices, error) {
 	db, err := leveldb.OpenFile(p.datPath+"/index/", &opt.Options{ReadOnly: true})
 	defer db.Close()
 	if err != nil {

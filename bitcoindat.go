@@ -1,4 +1,4 @@
-package datparser
+package bitcoindat
 
 import (
 	"encoding/binary"
@@ -6,19 +6,19 @@ import (
 	"os"
 )
 
-// DATParser is a parser that can read blocks from Bitcoin Core's blk????.dat files.
-type DATParser struct {
+// BitcoinDAT is a parser that can read blocks from Bitcoin Core's blk????.dat files.
+type BitcoinDAT struct {
 	datPath string
 }
 
-// NewDATParser is the factory function to instantiate a new DATParser
-func NewDATParser(datPath string) (*DATParser, error) {
-	return &DATParser{datPath: datPath}, nil
+// NewBitcoinDAT is the factory function to instantiate a new BitcoinDAT
+func NewBitcoinDAT(datPath string) (*BitcoinDAT, error) {
+	return &BitcoinDAT{datPath: datPath}, nil
 }
 
 // ReadBlockData reads the data for the passed BlockIndex and returns a byte slice
 // with the raw block data.
-func (d *DATParser) ReadBlockData(ib BlockIndex) ([]byte, error) {
+func (d *BitcoinDAT) ReadBlockData(ib BlockIndex) ([]byte, error) {
 	if ib.Status&BlockHaveData == 0 {
 		return nil, fmt.Errorf("No data avaliable for this block")
 	}

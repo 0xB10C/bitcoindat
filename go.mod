@@ -1,4 +1,4 @@
-module github.com/0xb10c/bitcoin-dat
+module github.com/0xb10c/bitcoindat
 
 go 1.13
 

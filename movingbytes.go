@@ -1,4 +1,4 @@
-package datparser
+package bitcoindat
 
 import (
 	"encoding/binary"
