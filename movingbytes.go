@@ -2,8 +2,6 @@ package bitcoindat
 
 import (
 	"encoding/binary"
-	"encoding/hex"
-	"fmt"
 )
 
 type MovingBytes struct {
@@ -33,10 +31,6 @@ func (mb *MovingBytes) ReadUInt32LitteEndian() (val uint32) {
 	val = binary.BigEndian.Uint32(mb.b[mb.pos : mb.pos+4])
 	mb.pos += 4
 	return
-}
-
-func (mb *MovingBytes) PrintNext(n uint64, tag string) {
-	fmt.Printf("Next at pos %d (%s): %s\n", mb.pos, tag, hex.EncodeToString(mb.b[mb.pos:mb.pos+n]))
 }
 
 func (mb *MovingBytes) ReadInt32LitteEndian() (val int32) {
