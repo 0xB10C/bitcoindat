@@ -14,9 +14,9 @@ type TransactionIndexReader struct {
 
 // TransactionIndex holds the block position of a transaction
 type TransactionIndex struct {
-	blockFile int
-	blockPos  int
-	txOffset  int
+	NumFile  int32
+	DataPos  uint32
+	TxOffset int
 }
 
 // OpenTransactionIndexReader opens a transaction index level db.
@@ -67,9 +67,9 @@ func (tir *TransactionIndexReader) Read(txid []byte) (*TransactionIndex, error) 
 
 	mb := NewMovingBytes(value)
 	ti := &TransactionIndex{}
-	ti.blockFile = int(mb.ReadVarInt())
-	ti.blockPos = int(mb.ReadVarInt())
-	ti.txOffset = int(mb.ReadVarInt())
+	ti.NumFile = int32(mb.ReadVarInt())
+	ti.DataPos = uint32(mb.ReadVarInt())
+	ti.TxOffset = int(mb.ReadVarInt())
 
 	return ti, nil
 }
