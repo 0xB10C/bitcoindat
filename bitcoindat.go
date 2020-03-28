@@ -7,12 +7,12 @@ import (
 
 // BitcoinDAT is a parser that can read blocks from Bitcoin Core's blk????.dat files.
 type BitcoinDAT struct {
-	datPath string
+	datadir string
 }
 
 // NewBitcoinDAT is the factory function to instantiate a new BitcoinDAT
-func NewBitcoinDAT(datPath string) *BitcoinDAT {
-	return &BitcoinDAT{datPath: datPath}
+func NewBitcoinDAT(datadir string) *BitcoinDAT {
+	return &BitcoinDAT{datadir: datadir}
 }
 
 func (d *BitcoinDAT) openDB(path string) (*leveldb.DB, error) {

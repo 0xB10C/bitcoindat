@@ -65,7 +65,7 @@ type BlockIndex struct {
 // GetBlockIndices reads all indexed blocks from the leveldb database and
 // returns these unordered.
 func (p *BitcoinDAT) GetBlockIndices() (BlockIndices, error) {
-	db, err := p.openDB(p.datPath + "/blocks/index")
+	db, err := p.openDB(p.datadir + "/blocks/index")
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +205,7 @@ func (p *BitcoinDAT) ReadBlockData(ib BlockIndex) ([]byte, error) {
 	}
 
 	filename := fmt.Sprintf("blk%05d.dat", ib.NumFile)
-	file, err := os.Open(p.datPath + "/" + filename)
+	file, err := os.Open(p.datadir + "blocks/" + filename)
 	defer file.Close()
 	if err != nil {
 		return nil, err

@@ -22,7 +22,7 @@ type TransactionIndex struct {
 // OpenTransactionIndexReader opens a transaction index level db.
 // The DB must be closed after use, by calling Close method.
 func (p *BitcoinDAT) OpenTransactionIndexReader() (*TransactionIndexReader, error) {
-	db, err := p.openDB(p.datPath + "/indexes/txindex")
+	db, err := p.openDB(p.datadir + "/indexes/txindex")
 	if err != nil {
 		return nil, err
 	}
