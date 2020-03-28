@@ -15,7 +15,7 @@ func TestRead(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if ti.blockFile != 0 || ti.blockPos != 45415 || ti.txOffset != 1 {
+	if ti.NumFile != 0 || ti.DataPos != 45415 || ti.TxOffset != 1 {
 		t.Errorf("Expected %+v, but got %+v", &TransactionIndex{0, 45415, 1}, ti)
 	}
 }
