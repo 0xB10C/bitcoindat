@@ -55,13 +55,11 @@ func (tir *TransactionIndexReader) Read(txid []byte) (*TransactionIndex, error) 
 		return nil, fmt.Errorf("Expected txid byte array to have a length of 32 byte; got %d for txid: %s", len(txid), hex.EncodeToString(txid))
 	}
 
-	// reverse txid
-	for i := len(txid)/2 - 1; i >= 0; i-- {
-		opp := len(txid) - 1 - i
-		txid[i], txid[opp] = txid[opp], txid[i]
-	}
+	var tmp [32]byte
+	copy(tmp[:], txid)
+	txid256 := NewHash256WithReverse(tmp)
 
-	key := append([]byte("t"), txid...)
+	key := append([]byte("t"), txid256[:]...)
 	value, err := tir.db.Get(key, nil)
 	if err != nil {
 		return nil, err
