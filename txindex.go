@@ -8,15 +8,15 @@ import (
 )
 
 // TransactionIndexReader reads TransactionIndex's from a LevelDB
-type TransactionIndexReader struct{
+type TransactionIndexReader struct {
 	db *leveldb.DB
 }
 
 // TransactionIndex holds the block position of a transaction
-type TransactionIndex struct{
+type TransactionIndex struct {
 	blockFile int
-    blockPos int
-    txOffset int
+	blockPos  int
+	txOffset  int
 }
 
 // OpenTransactionIndexReader opens a transaction index level db.
@@ -31,12 +31,12 @@ func (p *BitcoinDAT) OpenTransactionIndexReader() (*TransactionIndexReader, erro
 }
 
 // Close closes the underlying LevelDB
-func (tir *TransactionIndexReader) Close (){
+func (tir *TransactionIndexReader) Close() {
 	tir.db.Close()
 }
 
 // ReadTXID reads a TransactionIndex from the LevelDB. This function wraps Read()
-func (tir *TransactionIndexReader) ReadTXID(txid string) (*TransactionIndex, error){
+func (tir *TransactionIndexReader) ReadTXID(txid string) (*TransactionIndex, error) {
 	if len(txid) != 64 {
 		return nil, fmt.Errorf("Expected txid string to have a length of 64 chars; got %d for txid: %s", len(txid), txid)
 	}
@@ -50,11 +50,11 @@ func (tir *TransactionIndexReader) ReadTXID(txid string) (*TransactionIndex, err
 }
 
 // Read reads a TransactionIndex from the LevelDB
-func (tir *TransactionIndexReader) Read(txid []byte) (*TransactionIndex, error){
+func (tir *TransactionIndexReader) Read(txid []byte) (*TransactionIndex, error) {
 	if len(txid) != 32 {
 		return nil, fmt.Errorf("Expected txid byte array to have a length of 32 byte; got %d for txid: %s", len(txid), hex.EncodeToString(txid))
 	}
-	
+
 	// reverse txid
 	for i := len(txid)/2 - 1; i >= 0; i-- {
 		opp := len(txid) - 1 - i
@@ -62,8 +62,8 @@ func (tir *TransactionIndexReader) Read(txid []byte) (*TransactionIndex, error){
 	}
 
 	key := append([]byte("t"), txid...)
-	value, err := tir.db.Get(key,nil)
-	if err!=nil{
+	value, err := tir.db.Get(key, nil)
+	if err != nil {
 		return nil, err
 	}
 
@@ -75,4 +75,3 @@ func (tir *TransactionIndexReader) Read(txid []byte) (*TransactionIndex, error){
 
 	return ti, nil
 }
-
