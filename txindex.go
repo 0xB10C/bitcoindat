@@ -46,20 +46,20 @@ func (tir *TransactionIndexReader) ReadTXID(txid string) (*TransactionIndex, err
 		return nil, err
 	}
 
-	return tir.Read(b)
+	if err != nil {
+		return nil, err
+	}
+
+	return tir.Read(NewHash256ByteSlice(b))
 }
 
 // Read reads a TransactionIndex from the LevelDB
-func (tir *TransactionIndexReader) Read(txid []byte) (*TransactionIndex, error) {
-	if len(txid) != 32 {
-		return nil, fmt.Errorf("Expected txid byte array to have a length of 32 byte; got %d for txid: %s", len(txid), hex.EncodeToString(txid))
-	}
+func (tir *TransactionIndexReader) Read(txid Hash256) (*TransactionIndex, error) {
 
-	var tmp [32]byte
-	copy(tmp[:], txid)
-	txid256 := NewHash256WithReverse(tmp)
+	// Bitcoin Core handles and saves the transaction ids in reverse.
+	txidReverse := txid.ReversedCopy()
 
-	key := append([]byte("t"), txid256[:]...)
+	key := append([]byte("t"), txidReverse[:]...)
 	value, err := tir.db.Get(key, nil)
 	if err != nil {
 		return nil, err

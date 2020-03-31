@@ -164,7 +164,7 @@ func (bi *BlockIndices) GetMainChain() BlockIndexChain {
 func parseBlockIndex(key []byte, value []byte) (ib BlockIndex, err error) {
 	hashBytes := [32]byte{}
 	copy(hashBytes[:], key[1:33])
-	hash := NewHash256WithReverse(hashBytes)
+	hash := NewHash256(hashBytes).ReversedCopy()
 
 	data := NewMovingBytes(value)
 
